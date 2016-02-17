@@ -13,6 +13,9 @@
 (require 'gh-issues)
 (require 'gh-issue-comments)
 
+(defvar magit-gh-issues-collapse-issues t
+  "Collapse issues by default in magit-statuslisting.")
+
 (defvar magit-gh-issues-mode-lighter " Issues:")
 
 (defun magit-gh-issues-get-api()
@@ -63,12 +66,18 @@
       (magit-insert-heading "Issues:")
       (mapc (lambda (issue)
               (let* ((number (number-to-string (oref issue :number)))
-                     ;; (body (oref issue :body))
+                     (body (oref issue :body))
                      (user (oref (oref issue :user) :login))
                      (title (oref issue :title)))
-                (insert (format "#%s (@%s) %s\n" number user title))))
-                ;; (magit-insert-section (issue)
-                ;;   (insert body)
+                (magit-insert-section
+                  (issue number)
+                  (insert (format "#%s (@%s) %s\n" number user title))
+                  (magit-insert-heading)
+                  (magit-insert-section
+                    (issue number body)
+                    'issue-number-body
+                    (insert (concat body "\n\n"))
+                    magit-gh-issues-collapse-issues))))
             issues)
       (when (not cached?)
         (insert "Press `% r` to update the issue list.\n\n"))
