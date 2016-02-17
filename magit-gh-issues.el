@@ -25,7 +25,7 @@
   (let* ((api (magit-gh-issues-get-api))
          (cache (oref api :cache))
          ;; (repo (magit-gh-issues-guess-repo))
-         (repo (list "Banno" "incidents")))
+         (repo (list "adamdecaf" "magit-gh-issues")))
     (pcache-map cache (lambda (k v)
                         (when (string-match
                                (format "/repos/%s/%s/" (car repo) (cdr repo))
@@ -57,9 +57,9 @@
 
 (defun magit-gh-issues-insert-gh-issues()
   (let* ((api (magit-gh-issues-get-api))
-         (cached? (magit-gh-issues-cached-p api "Banno" "incidents"))
+         (cached? (magit-gh-issues-cached-p api "adamdecaf" "magit-gh-issues"))
          (issues (oref
-                  (gh-issues-issue-list api "Banno" "incidents")
+                  (gh-issues-issue-list api "adamdecaf" "magit-gh-issues")
                   :data)))
     (magit-insert-section
       (issues)
