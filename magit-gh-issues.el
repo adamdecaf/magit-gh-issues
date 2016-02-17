@@ -70,14 +70,13 @@
                      (user (oref (oref issue :user) :login))
                      (title (oref issue :title)))
                 (magit-insert-section
-                  (issue number)
+                  (issue number magit-gh-issues-collapse-issues)
                   (insert (format "#%s (@%s) %s\n" number user title))
                   (magit-insert-heading)
                   (magit-insert-section
-                    (issue number body)
-                    'issue-number-body
-                    (insert (concat body "\n\n"))
-                    magit-gh-issues-collapse-issues))))
+                    (issue body)
+                    (insert (concat body "\n\n"))))
+                ))
             issues)
       (when (not cached?)
         (insert "Press `% r` to update the issue list.\n\n"))
