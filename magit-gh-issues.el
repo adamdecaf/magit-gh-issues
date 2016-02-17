@@ -66,7 +66,10 @@
       (magit-insert-heading "Issues:")
       (mapc (lambda (issue)
               (let* ((number (number-to-string (oref issue :number)))
+                     (body-header (propertize " Body\n" 'face 'magit-tag))
                      (body (replace-regexp-in-string "\r" "" (oref issue :body)))
+                     (comments-header (propertize " Comments: \n" 'face 'magit-tag))
+                     (comments "")
                      (user (oref (oref issue :user) :login))
                      (title (oref issue :title)))
                 (magit-insert-section
@@ -75,7 +78,13 @@
                   (magit-insert-heading)
                   (magit-insert-section
                     (issue body)
-                    (insert (concat body "\n\n"))))
+                    (insert (concat
+                             body-header " " body
+                             (if (equal (length body) 0)
+                                 "\n"
+                               "\n\n")
+                             comments-header "  <comments>"
+                             "\n\n"))))
                 ))
             issues)
       (when (not cached?)
