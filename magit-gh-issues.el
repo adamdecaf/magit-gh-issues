@@ -66,7 +66,7 @@
       (magit-insert-heading "Issues:")
       (mapc (lambda (issue)
               (let* ((number (number-to-string (oref issue :number)))
-                     (body (oref issue :body))
+                     (body (replace-regexp-in-string "\r" "" (oref issue :body)))
                      (user (oref (oref issue :user) :login))
                      (title (oref issue :title)))
                 (magit-insert-section
