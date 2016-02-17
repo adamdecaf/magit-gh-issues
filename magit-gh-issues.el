@@ -49,7 +49,7 @@
 (magit-define-popup magit-gh-issues-popup
   "Show popup buffer featuring Github Issue commands."
   'magit-commands
-  :actions  '((?r "Refresh" magit-gh-issues-reload)
+  :actions  '((?g "Reload" magit-gh-issues-reload)
               ;; (?c "Create new issue" magit-gh-issues-create-pull-request)
               ;; (?o "Open in browser" magit-gh-issues-open-in-browser)
               )
@@ -79,7 +79,7 @@
                 ))
             issues)
       (when (not cached?)
-        (insert "Press `% r` to update the issue list.\n\n"))
+        (insert "Press `% g` to update the issue list.\n\n"))
       (when (> (length issues) 0)
         (insert "\n"))
       )))
